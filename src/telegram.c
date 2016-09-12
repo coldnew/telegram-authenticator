@@ -106,6 +106,12 @@ void curl_set_json_headers(CURL *curl)
         curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
 }
 
+/* Callback for make curl not show response */
+static
+size_t dummy_callback(void *ptr, size_t size, size_t nmemb, void *stream)
+{
+        return size * nmemb;
+}
 
 /**
  * Send message to telegram channel.
@@ -130,7 +136,7 @@ bool telegram_send(const char *token, const char *chat_id, const char *msg)
 
         curl_easy_setopt(curl, CURLOPT_URL, url);
         curl_set_json_headers(curl);
-        //curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, NULL); /* ignore response callback */
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, dummy_callback); /* ignore response callback */
 
         /* build request data */
         json_object *jobj = json_object_new_object();

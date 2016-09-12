@@ -103,7 +103,7 @@ int main(int argc, char *argv[])
                 chat_id = (char *) telegram_fetch_chat_id(token);
 
                 if (chat_id) {
-                        printf("find chat_id: %s\n", chat_id);
+                        printf("\nFind chat_id: %s\n", chat_id);
                         break;
                 }
 
@@ -118,7 +118,7 @@ int main(int argc, char *argv[])
                 /* send something to notify user */
                 char message[512];
                 sprintf(message,
-                        "Welcome to user telegram-authenticator, your setup for user %s is done."
+                        "Welcome to use telegram-authenticator, your setup for user %s is done."
                         ,get_user_name());
 
                 telegram_send(token, chat_id, message);

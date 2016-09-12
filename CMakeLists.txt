@@ -1,0 +1,22 @@
+cmake_minimum_required(VERSION 2.8)
+
+project(pam_telegram_authenticator)
+
+SET(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules" )
+
+INCLUDE(GNUInstallDirs)
+
+INCLUDE(FindPkgConfig)
+SET(DEPENDENTS "libcurl json-c")
+PKG_CHECK_MODULES(PKGS REQUIRED ${DEPENDENTS})
+
+FOREACH(flag ${PKGS_CFLAGS})
+    SET(EXTRA_LIB_CFLAGS "${EXTRA_LIB_CFLAGS} ${flag}")
+ENDFOREACH(flag)
+SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${EXTRA_LIB_CFLAGS} -Werror -Wall" )
+
+INCLUDE_DIRECTORIES("${PROJECT_SOURCE_DIR}/include")
+
+FIND_PACKAGE(PAM REQUIRED)
+
+ADD_SUBDIRECTORY(src)
